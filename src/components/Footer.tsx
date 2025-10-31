@@ -21,20 +21,20 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Contact</h4>
             <div className="space-y-3">
               <a
-                href="tel:+20XXXXXXXXXX"
+                href="tel:+201110548715"
                 className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors"
               >
                 <Phone className="h-4 w-4" />
-                <span>+20 XXX XXX XXXX</span>
+                <span>+20 1110548715</span>
               </a>
               <a
-                href="https://wa.me/20XXXXXXXXXX"
+                href="https://wa.me/201110548715"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors"
               >
                 <Phone className="h-4 w-4" />
-                <span>WhatsApp: +20 XXX XXX XXXX</span>
+                <span>WhatsApp: +20 1110548715</span>
               </a>
               <a
                 href="mailto:info@drbeverage.com"

@@ -79,7 +79,27 @@ Services: ${data.services.join(", ")}
 Notes: ${data.notes || "None"}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/20XXXXXXXXXX?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/201110548715?text=${encodedMessage}`;
+
+    // TODO: Add your Formspree endpoint here
+    // Uncomment the following code after setting up Formspree:
+    /*
+    try {
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        console.log('Form submitted to Formspree successfully');
+      }
+    } catch (error) {
+      console.error('Formspree submission failed:', error);
+    }
+    */
 
     // Simulate form submission delay
     setTimeout(() => {

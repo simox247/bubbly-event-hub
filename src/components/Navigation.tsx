@@ -33,11 +33,12 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         isScrolled ? "bg-background/95 backdrop-blur-md shadow-md" : "bg-transparent"
       }`}
+      style={{ position: 'fixed', zIndex: 100 }}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-4 relative z-[101]">
         <div className="flex items-center justify-between">
           <button
             onClick={() => scrollToSection("hero")}
@@ -67,7 +68,7 @@ const Navigation = () => {
               asChild
               className="gap-2"
             >
-              <a href="tel:+20XXXXXXXXXX" aria-label="Call us">
+              <a href="tel:+201110548715" aria-label="Call us">
                 <Phone className="h-4 w-4" />
                 Call Us
               </a>
@@ -78,7 +79,7 @@ const Navigation = () => {
               asChild
               className="gap-2"
             >
-              <a href="https://wa.me/20XXXXXXXXXX" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp us">
+              <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp us">
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp
               </a>
@@ -104,7 +105,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4 border-t border-border pt-4">
+          <div className="md:hidden mt-4 pb-4 space-y-4 border-t border-border pt-4 relative z-[110]">
             {navLinks.map((link) => (
               <button
                 key={link.id}
@@ -116,13 +117,13 @@ const Navigation = () => {
             ))}
             <div className="flex flex-col gap-2 pt-2">
               <Button variant="outline" size="sm" asChild className="gap-2 w-full">
-                <a href="tel:+20XXXXXXXXXX">
+                <a href="tel:+201110548715">
                   <Phone className="h-4 w-4" />
                   Call Us
                 </a>
               </Button>
               <Button variant="outline" size="sm" asChild className="gap-2 w-full">
-                <a href="https://wa.me/20XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
                 </a>

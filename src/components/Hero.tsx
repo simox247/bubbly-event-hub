@@ -59,7 +59,7 @@ const Hero = () => {
             asChild
             className="shadow-lg"
           >
-            <a href="https://wa.me/20XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer">
               WhatsApp Us
             </a>
           </Button>
