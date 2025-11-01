@@ -122,32 +122,32 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className={`md:hidden mt-4 pb-4 space-y-4 pt-4 relative z-[110] ${
+          <div className={`md:hidden mt-4 pb-6 space-y-2 pt-4 relative z-[110] rounded-b-lg ${
             isScrolled 
-              ? "border-t border-border bg-background/95" 
-              : "border-t border-white/30 bg-black/40 backdrop-blur-md"
+              ? "border-t border-border bg-background/98 backdrop-blur-md shadow-lg" 
+              : "border-t border-white/30 bg-black/60 backdrop-blur-md"
           }`}>
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`block w-full text-left py-2 transition-colors ${
+                className={`block w-full text-left px-4 py-3 rounded-md transition-all font-medium ${
                   isScrolled
-                    ? "text-foreground hover:text-accent"
-                    : "text-white hover:text-accent"
+                    ? "text-foreground hover:bg-accent/10 hover:text-accent"
+                    : "text-white hover:bg-white/10"
                 }`}
               >
                 {link.label}
               </button>
             ))}
-            <div className="flex flex-col gap-2 pt-2">
-              <Button variant="outline" size="sm" asChild className="gap-2 w-full">
+            <div className="flex flex-col gap-3 pt-4 px-4 border-t ${isScrolled ? 'border-border' : 'border-white/20'}">
+              <Button variant="outline" size="sm" asChild className="gap-2 w-full justify-start">
                 <a href="tel:+201110548715">
                   <Phone className="h-4 w-4" />
                   Call Us
                 </a>
               </Button>
-              <Button variant="outline" size="sm" asChild className="gap-2 w-full">
+              <Button variant="outline" size="sm" asChild className="gap-2 w-full justify-start">
                 <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
