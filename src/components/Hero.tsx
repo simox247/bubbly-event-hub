@@ -36,17 +36,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 px-4 py-20 text-center flex flex-col items-center">
-        {/* Logo above hero text */}
-        <div className="mb-6 flex justify-center">
-          <img
-            src={require('@/assets/branding/logo-two-color.svg')}
-            alt="Dr. Beverage Logo"
-            className="h-20 md:h-28 lg:h-32 w-auto drop-shadow-lg"
-            style={{ maxWidth: '220px' }}
-            loading="eager"
-          />
-        </div>
+      <div className="container relative z-10 px-4 py-20 text-center">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
           Beverage Catering for Events—Done Right.
         </h1>

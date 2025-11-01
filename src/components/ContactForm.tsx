@@ -66,8 +66,36 @@ const ContactForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
-    // Prepare WhatsApp message
-    const message = `New Quote Request from Dr Beverage Website:
+    try {
+      // Submit to Web3Forms
+      const formData = {
+        access_key: "bcc347d5-168e-48bb-a759-800f5b138a44",
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        subject: "New Quote Request from Dr Beverage Website",
+        message: `
+Event Date: ${data.eventDate}
+Venue/Area: ${data.venue}
+Guest Count: ${data.guestCount}
+Services: ${data.services.join(", ")}
+Additional Notes: ${data.notes || "None"}
+        `,
+      };
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Prepare WhatsApp message
+        const message = `New Quote Request from Dr Beverage Website:
     
 Name: ${data.name}
 Phone: ${data.phone}
@@ -78,43 +106,32 @@ Guest Count: ${data.guestCount}
 Services: ${data.services.join(", ")}
 Notes: ${data.notes || "None"}`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/201110548715?text=${encodedMessage}`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/201110548715?text=${encodedMessage}`;
 
-    // TODO: Add your Formspree endpoint here
-    // Uncomment the following code after setting up Formspree:
-    /*
-    try {
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (response.ok) {
-        console.log('Form submitted to Formspree successfully');
+        setIsSubmitting(false);
+        toast({
+          title: "Quote request sent!",
+          description: "We've received your request and will get back to you within 24 hours. Opening WhatsApp now...",
+        });
+        
+        // Open WhatsApp
+        window.open(whatsappUrl, "_blank");
+        
+        // Reset form
+        form.reset();
+      } else {
+        throw new Error("Form submission failed");
       }
     } catch (error) {
-      console.error('Formspree submission failed:', error);
-    }
-    */
-
-    // Simulate form submission delay
-    setTimeout(() => {
       setIsSubmitting(false);
       toast({
-        title: "Quote request sent!",
-        description: "We'll get back to you within 24 hours. Opening WhatsApp now...",
+        title: "Oops! Something went wrong",
+        description: "Please try again or contact us directly via WhatsApp.",
+        variant: "destructive",
       });
-      
-      // Open WhatsApp
-      window.open(whatsappUrl, "_blank");
-      
-      // Reset form
-      form.reset();
-    }, 1000);
+      console.error("Form submission error:", error);
+    }
   };
 
   return (
