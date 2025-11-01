@@ -2,7 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -27,7 +36,7 @@ const formSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   phone: z.string().trim().min(10, "Please enter a valid phone number").max(20),
   email: z.string().trim().email("Please enter a valid email").max(255),
-  eventDate: z.string().min(1, "Event date is required"),
+  eventDate: z.string().min(1, "Please select at least one event date"),
   venue: z.string().trim().min(2, "Venue/area is required").max(200),
   guestCount: z.string().min(1, "Please select guest count"),
   services: z.array(z.string()).min(1, "Please select at least one service"),
@@ -39,6 +48,7 @@ type FormData = z.infer<typeof formSchema>;
 const ContactForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -94,32 +104,15 @@ Additional Notes: ${data.notes || "None"}
       const result = await response.json();
 
       if (result.success) {
-        // Prepare WhatsApp message
-        const message = `New Quote Request from Dr Beverage Website:
-    
-Name: ${data.name}
-Phone: ${data.phone}
-Email: ${data.email}
-Event Date: ${data.eventDate}
-Venue/Area: ${data.venue}
-Guest Count: ${data.guestCount}
-Services: ${data.services.join(", ")}
-Notes: ${data.notes || "None"}`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/201110548715?text=${encodedMessage}`;
-
         setIsSubmitting(false);
         toast({
           title: "Quote request sent!",
-          description: "We've received your request and will get back to you within 24 hours. Opening WhatsApp now...",
+          description: "We've received your request and will get back to you within 24 hours.",
         });
-        
-        // Open WhatsApp
-        window.open(whatsappUrl, "_blank");
         
         // Reset form
         form.reset();
+        setSelectedDates([]);
       } else {
         throw new Error("Form submission failed");
       }
@@ -171,7 +164,21 @@ Notes: ${data.notes || "None"}`;
                     <FormItem>
                       <FormLabel>Phone (WhatsApp) *</FormLabel>
                       <FormControl>
-                        <Input placeholder="+20 XXX XXX XXXX" {...field} />
+                        <Input 
+                          placeholder="+20 XXX XXX XXXX" 
+                          {...field}
+                          onChange={(e) => {
+                            let value = e.target.value;
+                            // Remove all non-digit characters except +
+                            value = value.replace(/[^\d+]/g, '');
+                            // If user hasn't typed + or starts typing digits, add +20
+                            if (value && !value.startsWith('+')) {
+                              value = '+2' + value;
+                            }
+                            // If empty or just +, allow it
+                            field.onChange(value);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -198,11 +205,83 @@ Notes: ${data.notes || "None"}`;
                   control={form.control}
                   name="eventDate"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Event Date *</FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Event Date(s) *</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                <span className="truncate">{field.value}</span>
+                              ) : (
+                                <span>Pick date(s) or range</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50 flex-shrink-0" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="multiple"
+                            selected={selectedDates}
+                            classNames={{
+                              cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected])]:rounded-md",
+                              day_selected: "!bg-accent !text-white hover:!bg-accent hover:!text-white focus:!bg-accent focus:!text-white !font-semibold !rounded-md",
+                              day_today: "!bg-transparent !text-foreground !font-normal"
+                            }}
+                            onSelect={(dates: Date[] | undefined) => {
+                              if (dates && dates.length > 0) {
+                                setSelectedDates(dates);
+                                const sortedDates = [...dates].sort((a, b) => a.getTime() - b.getTime());
+                                
+                                if (sortedDates.length === 1) {
+                                  field.onChange(format(sortedDates[0], "MMM dd, yyyy"));
+                                } else if (sortedDates.length === 2) {
+                                  // Check if it's a continuous range
+                                  const daysDiff = Math.round((sortedDates[1].getTime() - sortedDates[0].getTime()) / (1000 * 60 * 60 * 24));
+                                  if (daysDiff <= 1) {
+                                    // Adjacent days or same day - show as individual dates
+                                    field.onChange(
+                                      sortedDates.map((d) => format(d, "MMM dd")).join(", ") + `, ${format(sortedDates[1], "yyyy")}`
+                                    );
+                                  } else {
+                                    // Show as range
+                                    field.onChange(
+                                      `${format(sortedDates[0], "MMM dd")} - ${format(sortedDates[1], "MMM dd, yyyy")}`
+                                    );
+                                  }
+                                } else {
+                                  // Multiple dates - show all
+                                  field.onChange(
+                                    sortedDates.map((d) => format(d, "MMM dd")).join(", ") + `, ${format(sortedDates[sortedDates.length - 1], "yyyy")}`
+                                  );
+                                }
+                              } else {
+                                setSelectedDates([]);
+                                field.onChange("");
+                              }
+                            }}
+                            disabled={(date) =>
+                              date < new Date(new Date().setHours(0, 0, 0, 0))
+                            }
+                            initialFocus
+                            className="rounded-md"
+                          />
+                          {selectedDates.length > 0 && (
+                            <div className="px-3 py-2.5 bg-muted/30 border-t">
+                              <p className="text-xs text-center text-muted-foreground">
+                                <span className="font-semibold text-accent">{selectedDates.length}</span> {selectedDates.length === 1 ? 'day' : 'days'} selected
+                              </p>
+                            </div>
+                          )}
+                        </PopoverContent>
+                      </Popover>
                       <FormMessage />
                     </FormItem>
                   )}
