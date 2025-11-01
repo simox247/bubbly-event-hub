@@ -1,6 +1,18 @@
+/* Google Fonts - Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Brand Font */
+@font-face {
+  font-family: 'Calligraphy Brilliant';
+  src: url('/fonts/Calligraphy Brilliant.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
@@ -10,19 +22,19 @@ All colors MUST be HSL.
   :root {
     /* Brand Colors - Dr Beverage */
     --background: 0 0% 100%;
-    --foreground: 0 0% 7%;
+    --foreground: 276 15% 10%; /* Rich Black #1A171B */
     
     /* Deep Charcoal Base */
-    --primary: 0 0% 7%;
+    --primary: 276 15% 10%; /* Rich Black #1A171B */
     --primary-foreground: 0 0% 100%;
     
-    /* Mint/Teal Accent */
-    --accent: 171 73% 45%;
+    /* Gold/Brown Accent - Brand Color */
+    --accent: 40 42% 41%; /* Gold #94793D */
     --accent-foreground: 0 0% 100%;
     
     /* Citrus Highlight */
     --secondary: 40 100% 70%;
-    --secondary-foreground: 0 0% 7%;
+    --secondary-foreground: 276 15% 10%;
     
     /* Neutral Grays */
     --muted: 0 0% 96%;

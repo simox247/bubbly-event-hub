@@ -1,4 +1,5 @@
 import { Facebook, Phone, Mail, MapPin } from "lucide-react";
+import logoGold from "@/assets/branding/logo-gold.svg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold mb-4">Dr Beverage</h3>
+            <img 
+              src={logoGold} 
+              alt="Dr Beverage - Catering Solutions" 
+              className="h-16 w-auto mb-4"
+            />
             <p className="text-primary-foreground/80 mb-4">
               Professional beverage-only catering for weddings, corporate events, and celebrations. 
               We bring the drinks, you enjoy the party.

@@ -55,10 +55,9 @@ const Hero = () => {
             Get a Quote
           </Button>
           <Button
-            variant="secondary"
             size="xl"
             asChild
-            className="shadow-lg"
+            className="bg-white text-foreground hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer">
               WhatsApp Us

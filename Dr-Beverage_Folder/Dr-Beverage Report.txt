@@ -1,0 +1,75 @@
+Package Report
+
+-----------------------------------------------------------------------------
+Document:
+Name: Dr-Beverage.ai
+Color Mode: RGB color
+Color Profile: none
+Ruler Units: pixels
+Artboard Dimensions: 672.2697 px x 445.811 px
+Show Images in Outline Mode: OFF
+Highlight Substituted Fonts: OFF
+Highlight Substituted Glyphs: OFF
+Preserve Text Editability
+Simulate Colored Paper: OFF
+
+-----------------------------------------------------------------------------
+Spot Color Objects:
+
+-----------------------------------------------------------------------------
+Missing Fonts:NONE
+
+-----------------------------------------------------------------------------
+Protected Fonts that were not packaged:
+Noto Kufi Arabic Black (Adobe Fonts)
+Noto Kufi Arabic Medium (Adobe Fonts)
+
+-----------------------------------------------------------------------------
+Fonts:
+Calligraphy Brillian (OTF)
+
+-----------------------------------------------------------------------------
+Embedded Fonts:
+NONE
+
+-----------------------------------------------------------------------------
+Missing Links:
+NONE
+
+-----------------------------------------------------------------------------
+Linked Images:
+
+C:\Users\m.khaled\Downloads\2.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 166416K, 5332 by 7990 pixels
+Dimensions: 544.083 by 815.309 points 
+Resolution: 705.598 by 705.598 pixels per inch
+
+
+C:\Users\m.khaled\Downloads\1.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 70599K, 3471 by 5207 pixels
+Dimensions: 544.083 by 816.203 points 
+Resolution: 459.327 by 459.327 pixels per inch
+
+
+C:\Users\m.khaled\Downloads\0.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 62493K, 4800 by 3333 pixels
+Dimensions: 2199.905 by 1527.559 points 
+Resolution: 157.098 by 157.098 pixels per inch
+
+
+C:\Users\m.khaled\Downloads\Generative Fill.png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 8100K, 1920 by 1080 pixels
+Dimensions: 1920 by 1080 points 
+Resolution: 72 by 72 pixels per inch
