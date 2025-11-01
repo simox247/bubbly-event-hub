@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const Packages = () => {
   const scrollToContact = () => {
@@ -68,35 +69,35 @@ const Packages = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {packages.map((pkg) => (
-            <Card
-              key={pkg.name}
-              className={`relative ${
-                pkg.highlight
-                  ? "border-accent border-2 shadow-xl scale-105"
-                  : "border-border"
-              } bg-card transition-transform hover:scale-105 duration-300`}
-            >
-              {pkg.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-md">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              <CardHeader>
-                <CardTitle className="text-2xl mb-2">{pkg.name}</CardTitle>
-                <div className="text-3xl font-bold text-accent mb-2">{pkg.price}</div>
-                <CardDescription>{pkg.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {pkg.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2">
-                      <Check className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
+          {packages.map((pkg, index) => (
+            <ScrollReveal key={pkg.name} delay={index * 0.15}>
+              <Card
+                className={`relative ${
+                  pkg.highlight
+                    ? "border-accent border-2 shadow-xl scale-105"
+                    : "border-border"
+                } bg-card transition-transform hover:scale-105 duration-300 h-full`}
+              >
+                {pkg.highlight && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className="bg-accent text-accent-foreground px-4 py-1 rounded-full text-sm font-semibold shadow-md">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <CardHeader>
+                  <CardTitle className="text-2xl mb-2">{pkg.name}</CardTitle>
+                  <div className="text-3xl font-bold text-accent mb-2">{pkg.price}</div>
+                  <CardDescription>{pkg.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {pkg.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2">
+                        <Check className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
                 </ul>
               </CardContent>
               <CardFooter>
@@ -109,7 +110,8 @@ const Packages = () => {
                   Request Quote
                 </Button>
               </CardFooter>
-            </Card>
+              </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>

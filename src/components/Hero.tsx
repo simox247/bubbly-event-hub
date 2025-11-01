@@ -30,6 +30,7 @@ const Hero = () => {
           src={heroImage}
           alt="Professional beverage catering setup with colorful mocktails"
           className="w-full h-full object-cover"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/90" />
       </div>
