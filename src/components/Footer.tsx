@@ -42,11 +42,11 @@ const Footer = () => {
                 <span>WhatsApp: +20 1110548715</span>
               </a>
               <a
-                href="mailto:info@drbeverage.com"
+                href="mailto:info@dr-beverage.online"
                 className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                <span>info@drbeverage.com</span>
+                <span>info@dr-beverage.online</span>
               </a>
               <div className="flex items-center gap-2 text-primary-foreground/80">
                 <MapPin className="h-4 w-4" />
