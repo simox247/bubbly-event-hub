@@ -91,7 +91,7 @@ const Gallery = () => {
             See our beautiful setups and delicious beverages
           </p>
           <a
-            href="https://www.facebook.com/drbeverage"
+            href="https://www.facebook.com/drbeverage.online"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-accent hover:underline font-medium"
