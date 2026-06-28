@@ -74,9 +74,9 @@ const Packages = () => {
               <Card
                 className={`relative ${
                   pkg.highlight
-                    ? "border-accent border-2 shadow-xl scale-105"
+                    ? "border-accent border-2 shadow-xl ring-2 ring-accent/20"
                     : "border-border"
-                } bg-card transition-transform hover:scale-105 duration-300 h-full`}
+                } bg-card transition-shadow hover:shadow-xl duration-300 h-full`}
               >
                 {pkg.highlight && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
