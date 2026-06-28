@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -7,16 +7,22 @@ const Testimonials = () => {
       quote: "Flawless service and delicious drinks—our guests loved it. The mocktails were the highlight of our wedding!",
       author: "Mariam S.",
       role: "Wedding Client",
+      rating: 5,
+      initials: "MS",
     },
     {
       quote: "Professional team, clean setup, on time. They handled everything perfectly for our corporate event.",
       author: "Ahmed K.",
       role: "Corporate Event",
+      rating: 5,
+      initials: "AK",
     },
     {
       quote: "The fresh juice station was a huge hit at our birthday party. Staff was friendly and efficient!",
       author: "Layla M.",
       role: "Birthday Celebration",
+      rating: 5,
+      initials: "LM",
     },
   ];
 
@@ -37,12 +43,22 @@ const Testimonials = () => {
             <Card key={testimonial.author} className="bg-card border-border">
               <CardContent className="pt-6">
                 <Quote className="h-8 w-8 text-accent mb-4" />
+                <div className="flex gap-0.5 mb-3" aria-label={`${testimonial.rating} out of 5 stars`}>
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-accent text-accent" />
+                  ))}
+                </div>
                 <p className="text-muted-foreground mb-4 italic">
                   "{testimonial.quote}"
                 </p>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm flex-shrink-0">
+                    {testimonial.initials}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">{testimonial.author}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -19,18 +19,18 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [imageLoaded, setImageLoaded] = useState<{ [key: number]: boolean }>({});
   const images = [
-    { src: gallery1, alt: "Fresh orange juice being poured" },
-    { src: gallery2, alt: "Colorful signature mocktail with garnish" },
-    { src: gallery3, alt: "Specialty coffee latte art" },
-    { src: gallery4, alt: "Watermelon juice in mason jar" },
-    { src: gallery5, alt: "Multiple colorful mocktails on tray" },
-    { src: gallery6, alt: "Cucumber mint infused water dispenser" },
-    { src: gallery7, alt: "Pomegranate juice" },
-    { src: gallery8, alt: "Professional beverage bar setup at event" },
-    { src: gallery9, alt: "Cold brew coffee" },
-    { src: gallery10, alt: "Fresh mango smoothie" },
-    { src: gallery11, alt: "Elegant wedding beverage station" },
-    { src: gallery12, alt: "Colorful layered mocktail" },
+    { src: gallery1, alt: "Colorful cocktails lined up on bar counter" },
+    { src: gallery2, alt: "Signature mocktail with fresh garnish" },
+    { src: gallery3, alt: "Gourmet food plating and beverage pairing" },
+    { src: gallery4, alt: "Coffee bar setup with latte art" },
+    { src: gallery5, alt: "Festive celebration with colorful drinks" },
+    { src: gallery6, alt: "Fruit-infused water station" },
+    { src: gallery7, alt: "Bartender preparing craft beverages" },
+    { src: gallery8, alt: "Elegant glassware with artisan drinks" },
+    { src: gallery9, alt: "Fresh citrus drinks with ice" },
+    { src: gallery10, alt: "Refreshing smoothie bar display" },
+    { src: gallery11, alt: "Premium cocktail presentation" },
+    { src: gallery12, alt: "Catering event beverage station setup" },
   ];
 
   const openLightbox = (index: number) => {
@@ -120,9 +120,9 @@ const Gallery = () => {
                   imageLoaded[index] ? 'opacity-100' : 'opacity-0'
                 }`}
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
-                  View
+              <div className="absolute inset-0 bg-black/10 md:bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end md:items-center justify-center pb-3 md:pb-0">
+                <span className="text-white text-xs md:text-base opacity-80 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium bg-black/40 md:bg-transparent px-2 py-1 md:p-0 rounded">
+                  Tap to view
                 </span>
               </div>
             </div>
