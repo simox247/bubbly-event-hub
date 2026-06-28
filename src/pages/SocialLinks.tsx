@@ -67,7 +67,7 @@ export default function SocialLinks() {
           </a>
 
           {/* Instagram */}
-          <a href="https://www.instagram.com/dr_beverage/" target="_blank" rel="noopener noreferrer" className="btn btn-ig" aria-label="Follow us on Instagram">
+          <a href="https://www.instagram.com/dr_beverage_eg/" target="_blank" rel="noopener noreferrer" className="btn btn-ig" aria-label="Follow us on Instagram">
             <span className="btn-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C13584" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -80,7 +80,7 @@ export default function SocialLinks() {
           </a>
 
           {/* Website */}
-          <a href="https://www.dr-beverage.com" target="_blank" rel="noopener noreferrer" className="btn btn-web" aria-label="Visit our website">
+          <a href="https://www.dr-beverage.online" target="_blank" rel="noopener noreferrer" className="btn btn-web" aria-label="Visit our website">
             <span className="btn-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8860B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
