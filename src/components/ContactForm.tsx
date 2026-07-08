@@ -65,12 +65,14 @@ const ContactForm = () => {
   });
 
   const services = [
-    { id: "mocktails", label: "Mocktails" },
+    { id: "mocktails", label: "Mocktails & Refreshers" },
+    { id: "coffee", label: "Coffee Bar" },
     { id: "juices", label: "Fresh Juices" },
-    { id: "coffee", label: "Specialty Coffee" },
-    { id: "infused", label: "Infused Water" },
-    { id: "glassware", label: "Ice & Glassware" },
-    { id: "staff", label: "Professional Staff" },
+    { id: "icecream", label: "Ice Cream" },
+    { id: "taiyaki", label: "Taiyaki & Soft Serve" },
+    { id: "frozen", label: "Frozen Drinks" },
+    { id: "canzzzz", label: "Canzzzz" },
+    { id: "setup", label: "Bar Setup & Staff" },
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -136,7 +138,7 @@ const ContactForm = () => {
                     <FormItem>
                       <FormLabel>Name *</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" {...field} />
+                        <Input placeholder="Your name" autoComplete="name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -150,8 +152,10 @@ const ContactForm = () => {
                     <FormItem>
                       <FormLabel>Phone (WhatsApp) *</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="+20 XXX XXX XXXX" 
+                        <Input
+                          type="tel"
+                          placeholder="+20 XXX XXX XXXX"
+                          autoComplete="tel"
                           {...field}
                           onChange={(e) => {
                             let value = e.target.value;
@@ -179,7 +183,7 @@ const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Email *</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="your@email.com" {...field} />
+                      <Input type="email" placeholder="your@email.com" autoComplete="email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

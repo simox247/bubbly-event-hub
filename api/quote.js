@@ -22,12 +22,14 @@ export default async function handler(req, res) {
   });
 
   const serviceLabels = {
-    mocktails: 'Mocktails',
+    mocktails: 'Mocktails & Refreshers',
+    coffee: 'Coffee Bar',
     juices: 'Fresh Juices',
-    coffee: 'Specialty Coffee',
-    infused: 'Infused Water',
-    glassware: 'Ice & Glassware',
-    staff: 'Professional Staff',
+    icecream: 'Ice Cream',
+    taiyaki: 'Taiyaki & Soft Serve',
+    frozen: 'Frozen Drinks',
+    canzzzz: 'Canzzzz',
+    setup: 'Bar Setup & Staff',
   };
 
   const serviceList = services
