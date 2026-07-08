@@ -32,8 +32,24 @@ const menus = [
 
 const Menus = () => {
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+
+  // Track scroll progress continuously
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll > 0) {
+        setScrollProgress(el.scrollLeft / maxScroll);
+      }
+    };
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navigate = useCallback(
     (direction: "prev" | "next") => {
@@ -95,12 +111,15 @@ const Menus = () => {
         </ScrollReveal>
 
         {/* Mobile: horizontal scroll. Desktop: 5-col grid */}
-        <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4 lg:gap-5 sm:overflow-visible sm:pb-0 max-w-6xl mx-auto">
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4 lg:gap-5 sm:overflow-visible sm:pb-0 max-w-6xl mx-auto"
+        >
           {menus.map((menu, index) => (
             <ScrollReveal key={menu.title} delay={index * 0.08}>
               <button
                 onClick={() => setSelectedMenu(index)}
-                className="group flex-shrink-0 w-[42vw] sm:w-full snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200"
+                className="group flex-shrink-0 w-[38vw] sm:w-full snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200"
                 aria-label={`View ${menu.title} menu`}
               >
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
@@ -129,6 +148,7 @@ const Menus = () => {
             </ScrollReveal>
           ))}
         </div>
+
       </div>
 
       {/* Fullscreen Lightbox */}
