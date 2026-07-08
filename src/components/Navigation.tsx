@@ -70,7 +70,7 @@ const Navigation = () => {
   const navLinks = [
     { label: "Home", id: "hero" },
     { label: "Services", id: "services" },
-    { label: "Menus", id: "menus" },
+    { label: "Menu", id: "menus" },
     { label: "Gallery", id: "gallery" },
     { label: "FAQ", id: "faq" },
     { label: "Contact", id: "contact" },

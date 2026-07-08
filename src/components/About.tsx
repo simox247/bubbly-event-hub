@@ -1,8 +1,33 @@
+import { useState, useEffect } from "react";
 import productSinglePeach from "@/assets/branding/product-single-peach.webp";
-import productMockupCups from "@/assets/branding/product-mockup-cups.webp";
 import productStyledDrinks from "@/assets/branding/product-styled-drinks.webp";
 
+const images = [
+  { src: productSinglePeach, alt: "Fresh signature mocktail with peach garnish - Dr Beverage specialty drink", label: "Signature Mocktails" },
+  { src: productStyledDrinks, alt: "Styled beverage display with multiple drinks on serving tray", label: "Event Ready Service" },
+];
+
 const About = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Auto-crossfade on mobile only (no hover on mobile so auto is needed)
+  useEffect(() => {
+    if (reducedMotion) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [reducedMotion]);
+
   return (
     <section id="about" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -12,53 +37,69 @@ const About = () => {
             Your Complete Beverage Solution
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            Dr Beverage is a beverage-only catering team. We handle setup, service, and cleanup 
-            so you can enjoy your event. From specialty coffee to handcrafted mocktails and fresh 
+            Dr Beverage is a beverage-only catering team. We handle setup, service, and cleanup
+            so you can enjoy your event. From specialty coffee to handcrafted mocktails and fresh
             juice stations—we've got your drinks covered.
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            With years of experience serving weddings, corporate events, and celebrations across Cairo, 
+            With years of experience serving weddings, corporate events, and celebrations across Cairo,
             we bring professional service, premium ingredients, and stunning presentations to every occasion.
           </p>
         </div>
 
-        {/* Product Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
-            <img
-              src={productSinglePeach}
-              alt="Fresh signature mocktail with peach garnish - Dr Beverage specialty drink"
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-semibold text-lg">Signature Mocktails</p>
+        {/* Desktop: 2-col side-by-side */}
+        <div className="hidden md:grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {images.map((img) => (
+            <div key={img.label} className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <p className="text-white font-semibold text-lg">{img.label}</p>
+              </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
-            <img
-              src={productMockupCups}
-              alt="Dr Beverage branded cups with logo - professional beverage catering"
-              className="w-full h-full object-contain bg-muted scale-150 group-hover:scale-[1.55] transition-transform duration-500"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-semibold text-lg">Premium Presentation</p>
-            </div>
+        {/* Mobile: auto-crossfade carousel */}
+        <div className="md:hidden max-w-sm mx-auto">
+          <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg">
+            {images.map((img, i) => (
+              <img
+                key={img.label}
+                src={img.src}
+                alt={img.alt}
+                className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out ${
+                  i === activeIndex ? "opacity-100" : "opacity-0"
+                }`}
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            ))}
           </div>
-
-          <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
-            <img
-              src={productStyledDrinks}
-              alt="Styled beverage display with multiple drinks on serving tray"
-              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-semibold text-lg">Event Ready Service</p>
+          {/* Dot indicators */}
+          {!reducedMotion && (
+            <div className="flex justify-center gap-2 mt-3">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveIndex(i)}
+                  className="flex items-center justify-center w-8 h-8"
+                  aria-label={`Show ${images[i].label}`}
+                >
+                  <span
+                    className={`rounded-full transition-all duration-300 ${
+                      i === activeIndex
+                        ? "w-6 h-2 bg-accent"
+                        : "w-2 h-2 bg-accent/30"
+                    }`}
+                  />
+                </button>
+              ))}
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
