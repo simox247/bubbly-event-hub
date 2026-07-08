@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Wine, Droplets, Coffee, IceCreamCone, Cookie, Snowflake, Package, Briefcase } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
@@ -61,46 +60,6 @@ const ServiceCard = ({ service }: { service: typeof services[0] }) => (
 );
 
 const Services = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  // Auto-scroll on mobile
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el || reducedMotion) return;
-
-    // Only auto-scroll on mobile (< 640px)
-    const isDesktop = () => window.innerWidth >= 640;
-    if (isDesktop()) return;
-
-    let animId: number;
-    const speed = 0.8; // px per frame
-
-    const step = () => {
-      if (!paused && el) {
-        el.scrollLeft += speed;
-        // Reset to start when halfway (duplicate set begins)
-        const halfWidth = el.scrollWidth / 2;
-        if (el.scrollLeft >= halfWidth) {
-          el.scrollLeft = 0;
-        }
-      }
-      animId = requestAnimationFrame(step);
-    };
-
-    animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
-  }, [paused, reducedMotion]);
-
   return (
     <section id="services" className="py-16 md:py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -122,18 +81,19 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Mobile: auto-scrolling marquee */}
+        {/* Mobile: CSS marquee — no JS needed */}
         <div
-          ref={scrollRef}
-          className="sm:hidden flex gap-3 overflow-x-auto scrollbar-hide"
-          style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
+          className="sm:hidden overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+          }}
         >
-          {/* Duplicate cards for seamless loop */}
-          {[...services, ...services].map((service, index) => (
-            <ServiceCard key={`${service.title}-${index}`} service={service} />
-          ))}
+          <div className="flex gap-3 animate-marquee">
+            {[...services, ...services].map((service, index) => (
+              <ServiceCard key={`${service.title}-${index}`} service={service} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
