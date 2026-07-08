@@ -77,45 +77,31 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Submit to Web3Forms
-      const formData = {
-        access_key: "bcc347d5-168e-48bb-a759-800f5b138a44",
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        subject: "New Quote Request from Dr Beverage Website",
-        message: `
-Event Date: ${data.eventDate}
-Venue/Area: ${data.venue}
-Guest Count: ${data.guestCount}
-Services: ${data.services.join(", ")}
-Additional Notes: ${data.notes || "None"}
-        `,
-      };
-
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/quote", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          eventDate: data.eventDate,
+          venue: data.venue,
+          guestCount: data.guestCount,
+          services: data.services,
+          notes: data.notes,
+        }),
       });
 
-      const result = await response.json();
+      if (!response.ok) throw new Error("Form submission failed");
 
-      if (result.success) {
-        setIsSubmitting(false);
-        toast({
-          title: "Quote request sent!",
-          description: "We've received your request and will get back to you within 24 hours.",
-        });
-        
-        // Reset form
-        form.reset();
-        setSelectedDates([]);
-      } else {
-        throw new Error("Form submission failed");
-      }
+      setIsSubmitting(false);
+      toast({
+        title: "Quote request sent!",
+        description: "We've received your request and will get back to you within 24 hours.",
+      });
+
+      form.reset();
+      setSelectedDates([]);
     } catch (error) {
       setIsSubmitting(false);
       toast({

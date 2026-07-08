@@ -1,18 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
 .apply-container {
-  position: fixed;
-  inset: 0;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Noto Sans Arabic', 'DM Sans', sans-serif;
   background: linear-gradient(135deg, #D2B48C 0%, #E5CBA8 25%, #D2B48C 50%, #DDB89A 75%, #D2B48C 100%);
-  overflow-y: auto;
   z-index: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   direction: rtl;
-  padding: 32px 0;
+  padding: 32px 16px;
 }
 
 /* ── Ambient background (reuse SocialLinks) ── */
@@ -369,9 +367,16 @@
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
+  .apply-container {
+    padding: 24px 12px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    align-items: flex-start;
+  }
+
   .apply-card {
-    padding: 40px 28px 32px;
+    padding: 40px 24px 32px;
     border-radius: 24px;
+    width: 100%;
   }
 
   .apply-heading h1 {
@@ -381,7 +386,7 @@
   .apply-input,
   .apply-textarea {
     padding: 12px 14px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .apply-submit {
