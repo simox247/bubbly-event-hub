@@ -79,27 +79,6 @@ const About = () => {
               />
             ))}
           </div>
-          {/* Dot indicators */}
-          {!reducedMotion && (
-            <div className="flex justify-center gap-2 mt-3">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveIndex(i)}
-                  className="flex items-center justify-center w-8 h-8"
-                  aria-label={`Show ${images[i].label}`}
-                >
-                  <span
-                    className={`rounded-full transition-all duration-300 ${
-                      i === activeIndex
-                        ? "w-6 h-2 bg-accent"
-                        : "w-2 h-2 bg-accent/30"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </section>
