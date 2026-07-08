@@ -118,8 +118,8 @@ const Menus = () => {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300 hidden sm:block" />
+                  <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex">
                     <span className="bg-white/90 text-stone-800 px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm">
                       View Menu
                     </span>
@@ -152,10 +152,11 @@ const Menus = () => {
           aria-modal="true"
           aria-label={menus[selectedMenu].title}
         >
-          {/* Close button */}
+          {/* Close button — safe area aware */}
           <button
             onClick={close}
-            className="absolute top-4 right-4 z-10 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
+            className="absolute right-4 z-10 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
+            style={{ top: 'max(16px, env(safe-area-inset-top, 16px))' }}
             aria-label="Close menu viewer"
           >
             <X className="h-6 w-6" />
@@ -185,20 +186,27 @@ const Menus = () => {
             <ChevronRight className="h-6 w-6" />
           </button>
 
-          {/* Bottom bar: dots + title */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2">
+          {/* Bottom bar: dots + title — safe area aware */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            style={{ bottom: 'max(24px, calc(env(safe-area-inset-bottom, 0px) + 12px))' }}
+          >
+            <div className="flex items-center gap-1">
               {menus.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedMenu(i)}
-                  className={`rounded-full transition-all duration-200 ${
-                    i === selectedMenu
-                      ? "w-6 h-2 bg-white"
-                      : "w-2 h-2 bg-white/40 hover:bg-white/60"
-                  }`}
+                  className="flex items-center justify-center w-8 h-8"
                   aria-label={`Go to ${menus[i].title}`}
-                />
+                >
+                  <span
+                    className={`rounded-full transition-all duration-200 ${
+                      i === selectedMenu
+                        ? "w-6 h-2 bg-white"
+                        : "w-2 h-2 bg-white/40"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
             <span className="text-white/70 text-sm font-medium">
