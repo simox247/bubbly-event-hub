@@ -30,26 +30,44 @@ const menus = [
   },
 ];
 
+const MenuCard = ({ menu, index, onSelect, mobile }: {
+  menu: typeof menus[0]; index: number; onSelect: (i: number) => void; mobile?: boolean;
+}) => (
+  <button
+    onClick={() => onSelect(index)}
+    className={`group ${mobile ? 'flex-shrink-0 w-[35vw]' : 'w-full'} snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200`}
+    aria-label={`View ${menu.title} menu`}
+  >
+    <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
+      <img
+        src={menu.src}
+        alt={`${menu.title} menu`}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300 hidden sm:block" />
+      <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex">
+        <span className="bg-white/90 text-stone-800 px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm">
+          View Menu
+        </span>
+      </div>
+    </div>
+    <div className="mt-2 sm:mt-3 text-center px-1">
+      <h3 className="font-bold text-foreground text-xs sm:text-base">
+        {menu.title}
+      </h3>
+      <p className="text-muted-foreground text-[10px] sm:text-sm mt-0.5 leading-snug">
+        {menu.subtitle}
+      </p>
+    </div>
+  </button>
+);
+
 const Menus = () => {
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
-
-  // Track scroll progress continuously
-  useEffect(() => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const handleScroll = () => {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      if (maxScroll > 0) {
-        setScrollProgress(el.scrollLeft / maxScroll);
-      }
-    };
-    el.addEventListener("scroll", handleScroll, { passive: true });
-    return () => el.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const navigate = useCallback(
     (direction: "prev" | "next") => {
@@ -110,42 +128,22 @@ const Menus = () => {
           </div>
         </ScrollReveal>
 
-        {/* Mobile: horizontal scroll. Desktop: 5-col grid */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4 lg:gap-5 sm:overflow-visible sm:pb-0 max-w-6xl mx-auto"
-        >
+        {/* Desktop: grid with ScrollReveal */}
+        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5 max-w-6xl mx-auto">
           {menus.map((menu, index) => (
             <ScrollReveal key={menu.title} delay={index * 0.08}>
-              <button
-                onClick={() => setSelectedMenu(index)}
-                className="group flex-shrink-0 w-[38vw] sm:w-full snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200"
-                aria-label={`View ${menu.title} menu`}
-              >
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
-                  <img
-                    src={menu.src}
-                    alt={`${menu.title} menu`}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300 hidden sm:block" />
-                  <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:flex">
-                    <span className="bg-white/90 text-stone-800 px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm">
-                      View Menu
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-2 sm:mt-3 text-center px-1">
-                  <h3 className="font-bold text-foreground text-xs sm:text-base">
-                    {menu.title}
-                  </h3>
-                  <p className="text-muted-foreground text-[10px] sm:text-sm mt-0.5 leading-snug">
-                    {menu.subtitle}
-                  </p>
-                </div>
-              </button>
+              <MenuCard menu={menu} index={index} onSelect={setSelectedMenu} />
             </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Mobile: plain horizontal scroll, no ScrollReveal */}
+        <div
+          ref={scrollContainerRef}
+          className="sm:hidden flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide"
+        >
+          {menus.map((menu, index) => (
+            <MenuCard key={menu.title} menu={menu} index={index} onSelect={setSelectedMenu} mobile />
           ))}
         </div>
 
