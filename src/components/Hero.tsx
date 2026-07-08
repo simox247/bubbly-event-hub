@@ -12,11 +12,11 @@ const Hero = () => {
   };
 
   const badges = [
-    { icon: Droplets, label: "Fresh Juices" },
-    { icon: Wine, label: "Signature Mocktails" },
+    { icon: Wine, label: "Mocktails" },
     { icon: Coffee, label: "Coffee Bar" },
-    { icon: Sparkles, label: "Ice & Glassware" },
-    { icon: Users, label: "Trained Staff" },
+    { icon: Droplets, label: "Fresh Juices" },
+    { icon: Sparkles, label: "Ice Cream & Taiyaki" },
+    { icon: Users, label: "Full Event Service" },
   ];
 
   return (

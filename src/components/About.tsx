@@ -24,7 +24,7 @@ const About = () => {
     if (reducedMotion) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [reducedMotion]);
 
