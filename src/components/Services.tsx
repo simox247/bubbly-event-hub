@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Wine, Droplets, Coffee, IceCreamCone, Cookie, Snowflake, Package, Briefcase } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
@@ -45,7 +46,61 @@ const services = [
   },
 ];
 
+const ServiceCard = ({ service }: { service: typeof services[0] }) => (
+  <Card className="flex-shrink-0 w-[70vw] sm:w-full border-border hover:shadow-lg transition-shadow duration-300 bg-card h-[200px] sm:h-[240px]">
+    <CardHeader className="p-4 sm:p-6">
+      <div className="mb-3 p-2.5 sm:p-3 bg-accent/10 rounded-lg w-fit">
+        <service.icon className="h-5 w-5 sm:h-7 sm:w-7 text-accent" />
+      </div>
+      <CardTitle className="text-base sm:text-lg mb-1 sm:mb-2">{service.title}</CardTitle>
+      <CardDescription className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+        {service.description}
+      </CardDescription>
+    </CardHeader>
+  </Card>
+);
+
 const Services = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Auto-scroll on mobile
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || reducedMotion) return;
+
+    // Only auto-scroll on mobile (< 640px)
+    const isDesktop = () => window.innerWidth >= 640;
+    if (isDesktop()) return;
+
+    let animId: number;
+    const speed = 0.8; // px per frame
+
+    const step = () => {
+      if (!paused && el) {
+        el.scrollLeft += speed;
+        // Reset to start when halfway (duplicate set begins)
+        const halfWidth = el.scrollWidth / 2;
+        if (el.scrollLeft >= halfWidth) {
+          el.scrollLeft = 0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [paused, reducedMotion]);
+
   return (
     <section id="services" className="py-16 md:py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -58,22 +113,25 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Mobile: horizontal scroll. Desktop: 4-col grid */}
-        <div className="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 lg:gap-5 sm:overflow-visible sm:pb-0 max-w-6xl mx-auto">
+        {/* Desktop: 4-col grid */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <ScrollReveal key={service.title} delay={index * 0.06}>
-              <Card className="flex-shrink-0 w-[70vw] sm:w-full snap-start border-border hover:shadow-lg transition-shadow duration-300 bg-card h-full">
-                <CardHeader className="p-4 sm:p-6">
-                  <div className="mb-3 p-2.5 sm:p-3 bg-accent/10 rounded-lg w-fit">
-                    <service.icon className="h-5 w-5 sm:h-7 sm:w-7 text-accent" />
-                  </div>
-                  <CardTitle className="text-base sm:text-lg mb-1 sm:mb-2">{service.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <ServiceCard service={service} />
             </ScrollReveal>
+          ))}
+        </div>
+
+        {/* Mobile: auto-scrolling marquee */}
+        <div
+          ref={scrollRef}
+          className="sm:hidden flex gap-3 overflow-x-auto scrollbar-hide"
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
+        >
+          {/* Duplicate cards for seamless loop */}
+          {[...services, ...services].map((service, index) => (
+            <ServiceCard key={`${service.title}-${index}`} service={service} />
           ))}
         </div>
       </div>
