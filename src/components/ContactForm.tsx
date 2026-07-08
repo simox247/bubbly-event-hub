@@ -159,7 +159,7 @@ const ContactForm = () => {
                             value = value.replace(/[^\d+]/g, '');
                             // If user hasn't typed + or starts typing digits, add +20
                             if (value && !value.startsWith('+')) {
-                              value = '+2' + value;
+                              value = '+20' + value;
                             }
                             // If empty or just +, allow it
                             field.onChange(value);
@@ -329,7 +329,7 @@ const ContactForm = () => {
                             return (
                               <FormItem
                                 key={service.id}
-                                className="flex flex-row items-start space-x-3 space-y-0"
+                                className="flex flex-row items-start space-x-3 space-y-0 cursor-pointer"
                               >
                                 <FormControl>
                                   <Checkbox

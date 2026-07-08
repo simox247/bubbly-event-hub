@@ -43,7 +43,7 @@ const Testimonials = () => {
             <Card key={testimonial.author} className="bg-card border-border">
               <CardContent className="pt-6">
                 <Quote className="h-8 w-8 text-accent mb-4" />
-                <div className="flex gap-0.5 mb-3" aria-label={`${testimonial.rating} out of 5 stars`}>
+                <div className="flex gap-0.5 mb-3" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-accent text-accent" />
                   ))}

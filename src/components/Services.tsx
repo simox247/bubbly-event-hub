@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Wine, Droplets, Coffee, Sparkles, Briefcase, Users } from "lucide-react";
+import { Wine, Droplets, Coffee, IceCreamCone, Cookie, Snowflake, Package, Users, Briefcase } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const Services = () => {
@@ -7,32 +7,42 @@ const Services = () => {
     {
       icon: Wine,
       title: "Signature Mocktail Bar",
-      description: "Seasonal menus with fresh garnishes and creative presentations",
-    },
-    {
-      icon: Droplets,
-      title: "Fresh Juice Station",
-      description: "Orange, pomegranate, sugarcane, watermelon, and seasonal mango",
+      description: "Mojitos, refreshers & creative mocktails with fresh garnishes and elegant presentation",
     },
     {
       icon: Coffee,
       title: "Specialty Coffee Bar",
-      description: "Espresso-based drinks served hot and iced by professional baristas",
+      description: "Espresso, Spanish latte, matcha & iced drinks served by professional baristas",
     },
     {
-      icon: Sparkles,
-      title: "Infused Water & Soda Bar",
-      description: "Cucumber-mint, lemon-basil, berries, and artisan sodas",
+      icon: Droplets,
+      title: "Fresh Juice Station",
+      description: "Orange, mango, strawberry & seasonal juices made fresh on-site",
+    },
+    {
+      icon: IceCreamCone,
+      title: "Ice Cream Station",
+      description: "6 premium flavors with toppings, sauces & a charming ice cream cart",
+    },
+    {
+      icon: Cookie,
+      title: "Taiyaki & Soft Serve",
+      description: "Japanese taiyaki ice cream in black sesame & biscuit editions with 5 soft serve flavors",
+    },
+    {
+      icon: Snowflake,
+      title: "Frozen Drinks Station",
+      description: "Colorful slush flavors with a professional slush machine — perfect for summer events",
+    },
+    {
+      icon: Package,
+      title: "Canzzzz — Ready to Go",
+      description: "Sealed canned coffee, mojitos, juices & signature blends — fresh, portable, branded",
     },
     {
       icon: Briefcase,
-      title: "Ice, Glassware & Bar Setup",
-      description: "Complete bar counters, dispensers, and elegant displays",
-    },
-    {
-      icon: Users,
-      title: "Professional Staffing",
-      description: "Trained baristas, mixologists, and on-site supervisors",
+      title: "Bar Setup & Staffing",
+      description: "Complete bar counters, premium glassware, trained baristas & on-site supervisors",
     },
   ];
 
@@ -48,18 +58,18 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <ScrollReveal key={service.title} delay={index * 0.1}>
+            <ScrollReveal key={service.title} delay={index * 0.08}>
               <Card
                 className="border-border hover:shadow-lg transition-shadow duration-300 bg-card h-full"
               >
                 <CardHeader>
                   <div className="mb-4 p-3 bg-accent/10 rounded-lg w-fit">
-                    <service.icon className="h-8 w-8 text-accent" />
+                    <service.icon className="h-7 w-7 text-accent" />
                   </div>
-                  <CardTitle className="text-xl mb-2">{service.title}</CardTitle>
-                  <CardDescription className="text-muted-foreground">
+                  <CardTitle className="text-lg mb-2">{service.title}</CardTitle>
+                  <CardDescription className="text-muted-foreground text-base leading-relaxed">
                     {service.description}
                   </CardDescription>
                 </CardHeader>

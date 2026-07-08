@@ -5,6 +5,9 @@ import { Phone, MessageCircle, Menu, X } from "lucide-react";
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+
+  const sectionIds = ["hero", "services", "menus", "gallery", "faq", "contact"];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +15,48 @@ const Navigation = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const visibleSections = new Map<string, IntersectionObserverEntry>();
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.target.id) {
+          if (entry.isIntersecting) {
+            visibleSections.set(entry.target.id, entry);
+          } else {
+            visibleSections.delete(entry.target.id);
+          }
+        }
+      });
+
+      if (visibleSections.size > 0) {
+        let best: string | null = null;
+        let bestRatio = -1;
+        visibleSections.forEach((entry, id) => {
+          if (entry.intersectionRatio > bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            best = id;
+          }
+        });
+        if (best) setActiveSection(best);
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+    });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    observers.push(observer);
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -25,7 +70,7 @@ const Navigation = () => {
   const navLinks = [
     { label: "Home", id: "hero" },
     { label: "Services", id: "services" },
-    { label: "Packages", id: "packages" },
+    { label: "Menus", id: "menus" },
     { label: "Gallery", id: "gallery" },
     { label: "FAQ", id: "faq" },
     { label: "Contact", id: "contact" },
@@ -61,9 +106,11 @@ const Navigation = () => {
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
                 className={`text-sm font-medium transition-colors ${
-                  isScrolled
-                    ? "text-foreground hover:text-accent"
-                    : "text-white hover:text-accent drop-shadow-lg"
+                  activeSection === link.id
+                    ? "text-[#94793D] underline underline-offset-4 decoration-2"
+                    : isScrolled
+                      ? "text-foreground hover:text-accent"
+                      : "text-white hover:text-accent drop-shadow-lg"
                 }`}
               >
                 {link.label}
@@ -132,15 +179,17 @@ const Navigation = () => {
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
                 className={`block w-full text-left px-4 py-3 rounded-md transition-all font-medium ${
-                  isScrolled
-                    ? "text-foreground hover:bg-accent/10 hover:text-accent"
-                    : "text-white hover:bg-white/10"
+                  activeSection === link.id
+                    ? "text-[#94793D] bg-accent/10 border-l-2 border-[#94793D]"
+                    : isScrolled
+                      ? "text-foreground hover:bg-accent/10 hover:text-accent"
+                      : "text-white hover:bg-white/10"
                 }`}
               >
                 {link.label}
               </button>
             ))}
-            <div className="flex flex-col gap-3 pt-4 px-4 border-t ${isScrolled ? 'border-border' : 'border-white/20'}">
+            <div className={`flex flex-col gap-3 pt-4 px-4 border-t ${isScrolled ? 'border-border' : 'border-white/20'}`}>
               <Button variant="outline" size="sm" asChild className="gap-2 w-full justify-start">
                 <a href="tel:+201110548715">
                   <Phone className="h-4 w-4" />

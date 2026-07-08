@@ -27,6 +27,7 @@ const Footer = () => {
             <div className="space-y-3">
               <a
                 href="tel:+201110548715"
+                aria-label="Call us"
                 className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors"
               >
                 <Phone className="h-4 w-4" />
@@ -36,6 +37,7 @@ const Footer = () => {
                 href="https://wa.me/201110548715"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Message us on WhatsApp"
                 className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors"
               >
                 <Phone className="h-4 w-4" />

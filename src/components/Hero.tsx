@@ -59,7 +59,7 @@ const Hero = () => {
             asChild
             className="bg-white text-foreground hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/201110548715" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp chat">
               WhatsApp Us
             </a>
           </Button>

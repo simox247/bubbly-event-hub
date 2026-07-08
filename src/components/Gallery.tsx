@@ -103,9 +103,11 @@ const Gallery = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
           {images.map((image, index) => (
-            <div
+            <button
               key={index}
-              className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer relative"
+              type="button"
+              aria-label={`View ${image.alt}`}
+              className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
               onClick={() => openLightbox(index)}
             >
               {!imageLoaded[index] && (
@@ -125,7 +127,7 @@ const Gallery = () => {
                   Tap to view
                 </span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
