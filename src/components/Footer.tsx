@@ -13,7 +13,7 @@ const Footer = () => {
             <img 
               src={logoGold} 
               alt="Dr Beverage - Catering Solutions" 
-              className="h-16 w-auto mb-4"
+              className="h-16 w-auto mb-6"
             />
             <p className="text-primary-foreground/80 mb-4">
               Professional beverage-only catering for weddings, corporate events, and celebrations. 

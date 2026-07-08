@@ -79,9 +79,9 @@ const Navigation = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-        isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-md" 
-          : "bg-gradient-to-b from-black/40 to-transparent backdrop-blur-sm"
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md shadow-md"
+          : "bg-black/30 backdrop-blur-sm"
       }`}
       style={{ position: 'fixed', zIndex: 100 }}
     >
@@ -105,12 +105,12 @@ const Navigation = () => {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-medium transition-all duration-200 ${
                   activeSection === link.id
-                    ? "text-[#94793D] underline underline-offset-4 decoration-2"
+                    ? "text-[#94793D] bg-accent/15 rounded-full px-3 py-1"
                     : isScrolled
-                      ? "text-foreground hover:text-accent"
-                      : "text-white hover:text-accent drop-shadow-lg"
+                      ? "text-foreground hover:text-accent px-3 py-1"
+                      : "text-white hover:text-accent drop-shadow-lg px-3 py-1"
                 }`}
               >
                 {link.label}

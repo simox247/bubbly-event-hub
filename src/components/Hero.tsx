@@ -32,7 +32,7 @@ const Hero = () => {
           className="w-full h-full object-cover"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/55 via-primary/70 to-primary/90" />
       </div>
 
       {/* Content */}
@@ -71,7 +71,7 @@ const Hero = () => {
             <Badge
               key={badge.label}
               variant="secondary"
-              className="px-4 py-2 text-sm font-medium bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30 transition-colors"
+              className="px-4 py-2 text-sm font-medium backdrop-blur-md bg-white/15 text-white border border-white/30 hover:bg-white/30 transition-colors"
             >
               <badge.icon className="h-4 w-4 mr-2" />
               {badge.label}

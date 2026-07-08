@@ -42,7 +42,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial) => (
             <Card key={testimonial.author} className="bg-card border-border">
               <CardContent className="pt-6">
-                <Quote className="h-8 w-8 text-accent mb-4" />
+                <Quote className="h-6 w-6 sm:h-8 sm:w-8 text-accent mb-4" />
                 <div className="flex gap-0.5 mb-3" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-accent text-accent" />
@@ -52,7 +52,7 @@ const Testimonials = () => {
                   "{testimonial.quote}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm flex-shrink-0">
+                  <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-semibold text-sm flex-shrink-0">
                     {testimonial.initials}
                   </div>
                   <div>

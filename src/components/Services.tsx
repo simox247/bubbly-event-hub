@@ -126,6 +126,7 @@ const Services = () => {
         <div
           ref={scrollRef}
           className="sm:hidden flex gap-3 overflow-x-auto scrollbar-hide"
+          style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}
         >

@@ -122,8 +122,8 @@ const Gallery = () => {
                   imageLoaded[index] ? 'opacity-100' : 'opacity-0'
                 }`}
               />
-              <div className="absolute inset-0 bg-black/10 md:bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end md:items-center justify-center pb-3 md:pb-0">
-                <span className="text-white text-xs md:text-base opacity-80 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium bg-black/40 md:bg-transparent px-2 py-1 md:p-0 rounded">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                <span className="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
                   Tap to view
                 </span>
               </div>

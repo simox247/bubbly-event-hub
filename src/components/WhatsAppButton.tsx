@@ -13,7 +13,7 @@ const WhatsAppButton = () => {
       <Button
         variant="accent"
         size="icon"
-        className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+        className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
       >
         <MessageCircle className="h-6 w-6" />
       </Button>
