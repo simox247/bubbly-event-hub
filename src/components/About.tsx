@@ -34,16 +34,12 @@ const About = () => {
         {/* Text Content */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            Your Complete Beverage Solution
+            Your Complete Catering Solution
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-            Dr Beverage is a beverage-only catering team. We handle setup, service, and cleanup
-            so you can enjoy your event. From specialty coffee to handcrafted mocktails and fresh
-            juice stations—we've got your drinks covered.
-          </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            With years of experience serving weddings, corporate events, and celebrations across Cairo,
-            we bring professional service, premium ingredients, and stunning presentations to every occasion.
+            You plan the event, we handle the drinks. From signature mocktails and specialty coffee
+            to ice cream stations and frozen drinks — Dr Beverage delivers a complete catering
+            experience with professional staff, premium setup, and full service across Egypt.
           </p>
         </div>
 

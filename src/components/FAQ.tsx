@@ -9,7 +9,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "Do you serve alcohol?",
-      answer: "No, we are beverage-only and specialize exclusively in non-alcoholic drinks including mocktails, fresh juices, specialty coffee, and infused waters.",
+      answer: "No, we specialize in non-alcoholic drinks and desserts — mocktails, fresh juices, specialty coffee, ice cream, taiyaki, frozen drinks, and more.",
     },
     {
       question: "Which areas do you cover?",

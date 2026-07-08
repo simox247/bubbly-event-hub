@@ -68,7 +68,7 @@ const Services = () => {
             Our Services
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Everything you need for exceptional beverage service at your event
+            Everything you need for exceptional catering at your event
           </p>
         </div>
 

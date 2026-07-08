@@ -38,7 +38,7 @@ const Hero = () => {
       {/* Content */}
       <div className="container relative z-10 px-4 py-20 text-center">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
-          Beverage Catering for Events—Done Right.
+          Event Catering—Done Right.
         </h1>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
           We serve premium non-alcoholic bars for weddings, corporate events, engagements, birthdays, and launches.

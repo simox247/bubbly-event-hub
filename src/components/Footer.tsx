@@ -16,8 +16,8 @@ const Footer = () => {
               className="h-16 w-auto mb-6"
             />
             <p className="text-primary-foreground/80 mb-4">
-              Professional beverage-only catering for weddings, corporate events, and celebrations. 
-              We bring the drinks, you enjoy the party.
+              Professional catering for weddings, corporate events, and celebrations.
+              We bring the drinks & desserts, you enjoy the party.
             </p>
           </div>
 
