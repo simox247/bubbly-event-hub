@@ -46,7 +46,7 @@ const About = () => {
         {/* Desktop: 2-col side-by-side */}
         <div className="hidden md:grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {images.map((img) => (
-            <div key={img.label} className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
+            <div key={img.label} className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 aspect-[3/4]">
               <img
                 src={img.src}
                 alt={img.alt}
@@ -62,7 +62,7 @@ const About = () => {
 
         {/* Mobile: auto-crossfade carousel */}
         <div className="md:hidden max-w-sm mx-auto">
-          <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg">
+          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
             {images.map((img, i) => (
               <img
                 key={img.label}

@@ -41,7 +41,7 @@ const Hero = () => {
           Event Catering—Done Right.
         </h1>
         <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-          We serve premium non-alcoholic bars for weddings, corporate events, engagements, birthdays, and launches.
+          Premium catering for weddings, corporate events, engagements, birthdays, and launches.
         </p>
 
         {/* CTAs */}

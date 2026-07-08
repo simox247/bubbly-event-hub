@@ -48,7 +48,7 @@ All colors MUST be HSL.
     
     --border: 16 78% 94%; /* Warm Border #FCEAE1 */
     --input: 16 78% 94%;
-    --ring: 171 73% 45%;
+    --ring: 40 42% 41%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -58,7 +58,7 @@ All colors MUST be HSL.
     /* Shadows */
     --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.08);
     --shadow-medium: 0 4px 16px hsl(0 0% 0% / 0.12);
-    --shadow-accent: 0 8px 24px hsl(171 73% 45% / 0.2);
+    --shadow-accent: 0 8px 24px hsl(40 42% 41% / 0.2);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

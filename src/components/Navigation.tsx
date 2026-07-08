@@ -83,7 +83,6 @@ const Navigation = () => {
           ? "bg-background/95 backdrop-blur-md shadow-md"
           : "bg-black/30 backdrop-blur-sm"
       }`}
-      style={{ position: 'fixed', zIndex: 100 }}
     >
       <div className="container mx-auto px-4 py-4 relative z-[101]">
         <div className="flex items-center justify-between">

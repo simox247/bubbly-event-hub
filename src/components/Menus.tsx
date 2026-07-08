@@ -35,7 +35,7 @@ const MenuCard = ({ menu, index, onSelect, mobile }: {
 }) => (
   <button
     onClick={() => onSelect(index)}
-    className={`group ${mobile ? 'flex-shrink-0 w-[35vw]' : 'w-full'} snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200`}
+    className={`group ${mobile ? 'flex-shrink-0 w-[35vw]' : 'w-full'} snap-start focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200`}
     aria-label={`View ${menu.title} menu`}
   >
     <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">

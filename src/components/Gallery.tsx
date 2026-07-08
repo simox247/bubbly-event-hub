@@ -107,7 +107,7 @@ const Gallery = () => {
               key={index}
               type="button"
               aria-label={`View ${image.alt}`}
-              className="aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+              className="aspect-square overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
               onClick={() => openLightbox(index)}
             >
               {!imageLoaded[index] && (
@@ -173,7 +173,7 @@ const Gallery = () => {
                   <img
                     src={images[selectedImage].src}
                     alt={images[selectedImage].alt}
-                    className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                    className="max-w-full max-h-[80vh] object-contain rounded-2xl"
                   />
                   <p className="text-center text-white/80 mt-4 text-sm">
                     {images[selectedImage].alt}
