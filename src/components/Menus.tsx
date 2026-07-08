@@ -1,7 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const menus = [
@@ -34,6 +32,8 @@ const menus = [
 
 const Menus = () => {
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const navigate = useCallback(
     (direction: "prev" | "next") => {
@@ -47,16 +47,46 @@ const Menus = () => {
     [selectedMenu]
   );
 
+  const close = useCallback(() => setSelectedMenu(null), []);
+
+  // Keyboard nav
   useEffect(() => {
     if (selectedMenu === null) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") navigate("prev");
       if (e.key === "ArrowRight") navigate("next");
-      if (e.key === "Escape") setSelectedMenu(null);
+      if (e.key === "Escape") close();
     };
+    // Lock body scroll
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [selectedMenu, navigate]);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [selectedMenu, navigate, close]);
+
+  // Touch swipe handlers for lightbox
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    // Only trigger if horizontal swipe > 50px and more horizontal than vertical
+    if (absX > 50 && absX > absY * 1.5) {
+      if (deltaX > 0) navigate("prev");
+      else navigate("next");
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   return (
     <section id="menus" className="py-20 bg-muted/30">
@@ -72,16 +102,15 @@ const Menus = () => {
           </div>
         </ScrollReveal>
 
-        {/* Horizontal scroll on mobile, 5-col grid on desktop */}
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-5 lg:overflow-visible lg:pb-0 max-w-6xl mx-auto">
+        {/* Mobile: 2-col grid. Desktop: 5-col grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5 max-w-6xl mx-auto">
           {menus.map((menu, index) => (
             <ScrollReveal key={menu.title} delay={index * 0.08}>
               <button
                 onClick={() => setSelectedMenu(index)}
-                className="group flex-shrink-0 w-[200px] sm:w-[220px] lg:w-full snap-center focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 duration-300"
+                className="group w-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-2xl transition-transform hover:-translate-y-1 active:scale-[0.98] duration-200"
                 aria-label={`View ${menu.title} menu`}
               >
-                {/* Image container */}
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
                   <img
                     src={menu.src}
@@ -89,21 +118,18 @@ const Menus = () => {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  {/* Subtle hover scrim */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
-                  {/* View indicator */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span className="bg-white/90 text-stone-800 px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm">
                       View Menu
                     </span>
                   </div>
                 </div>
-                {/* Label below */}
                 <div className="mt-3 text-center px-1">
-                  <h3 className="font-bold text-foreground text-base lg:text-lg">
+                  <h3 className="font-bold text-foreground text-sm sm:text-base lg:text-lg">
                     {menu.title}
                   </h3>
-                  <p className="text-muted-foreground text-xs lg:text-sm mt-0.5 leading-snug">
+                  <p className="text-muted-foreground text-xs lg:text-sm mt-0.5 leading-snug hidden sm:block">
                     {menu.description}
                   </p>
                 </div>
@@ -111,55 +137,76 @@ const Menus = () => {
             </ScrollReveal>
           ))}
         </div>
-        <p className="text-center text-muted-foreground text-xs mt-2 lg:hidden">Swipe to see more →</p>
       </div>
 
-      {/* Lightbox */}
-      <Dialog
-        open={selectedMenu !== null}
-        onOpenChange={(open) => !open && setSelectedMenu(null)}
-      >
-        <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black/95 border-none overflow-hidden">
-          <VisuallyHidden>
-            <DialogTitle>
-              {selectedMenu !== null ? menus[selectedMenu].title : "Menu"}
-            </DialogTitle>
-          </VisuallyHidden>
+      {/* Fullscreen Lightbox */}
+      {selectedMenu !== null && (
+        <div
+          className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) close();
+          }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          role="dialog"
+          aria-modal="true"
+          aria-label={menus[selectedMenu].title}
+        >
+          {/* Close button */}
+          <button
+            onClick={close}
+            className="absolute top-4 right-4 z-10 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
+            aria-label="Close menu viewer"
+          >
+            <X className="h-6 w-6" />
+          </button>
 
-          {selectedMenu !== null && (
-            <div className="relative flex items-center justify-center min-h-[50vh] max-h-[90vh]">
-              <img
-                src={menus[selectedMenu].src}
-                alt={`${menus[selectedMenu].title} menu`}
-                className="w-full h-full object-contain max-h-[85vh]"
-              />
+          {/* Image */}
+          <img
+            src={menus[selectedMenu].src}
+            alt={`${menus[selectedMenu].title} menu`}
+            className="max-w-[95vw] max-h-[85vh] object-contain select-none"
+            draggable={false}
+          />
 
-              {/* Nav arrows */}
-              <button
-                onClick={() => navigate("prev")}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-                aria-label="Previous menu"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                onClick={() => navigate("next")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-                aria-label="Next menu"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
+          {/* Nav arrows — hidden on mobile (swipe instead) */}
+          <button
+            onClick={() => navigate("prev")}
+            className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/25 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
+            aria-label="Previous menu"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={() => navigate("next")}
+            className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/25 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
+            aria-label="Next menu"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
 
-              {/* Counter + title */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm flex items-center gap-2">
-                <span className="font-medium">{menus[selectedMenu].title}</span>
-                <span className="text-white/50">|</span>
-                <span className="text-white/70">{selectedMenu + 1}/{menus.length}</span>
-              </div>
+          {/* Bottom bar: dots + title */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+              {menus.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedMenu(i)}
+                  className={`rounded-full transition-all duration-200 ${
+                    i === selectedMenu
+                      ? "w-6 h-2 bg-white"
+                      : "w-2 h-2 bg-white/40 hover:bg-white/60"
+                  }`}
+                  aria-label={`Go to ${menus[i].title}`}
+                />
+              ))}
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+            <span className="text-white/70 text-sm font-medium">
+              {menus[selectedMenu].title}
+            </span>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
