@@ -101,9 +101,10 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
+              <a
                 key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                href={`#${link.id}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection(link.id); }}
                 className={`text-sm font-medium transition-all duration-200 ${
                   activeSection === link.id
                     ? "text-[#94793D] bg-accent/15 rounded-full px-3 py-1"
@@ -113,7 +114,7 @@ const Navigation = () => {
                 }`}
               >
                 {link.label}
-              </button>
+              </a>
             ))}
           </div>
 
@@ -174,9 +175,10 @@ const Navigation = () => {
               : "border-t border-white/30 bg-black/60 backdrop-blur-md"
           }`}>
             {navLinks.map((link) => (
-              <button
+              <a
                 key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                href={`#${link.id}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection(link.id); }}
                 className={`block w-full text-left px-4 py-3 rounded-md transition-all font-medium ${
                   activeSection === link.id
                     ? "text-[#94793D] bg-accent/10 border-l-2 border-[#94793D]"
@@ -186,7 +188,7 @@ const Navigation = () => {
                 }`}
               >
                 {link.label}
-              </button>
+              </a>
             ))}
             <div className={`flex flex-col gap-3 pt-4 px-4 border-t ${isScrolled ? 'border-border' : 'border-white/20'}`}>
               <Button variant="outline" size="sm" asChild className="gap-2 w-full justify-start">

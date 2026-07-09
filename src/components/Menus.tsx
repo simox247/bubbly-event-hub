@@ -7,26 +7,31 @@ const menus = [
     src: "/menus/beverages.jpg",
     title: "Beverages",
     subtitle: "Coffee, mocktails, juices, matcha & boba",
+    alt: "Dr Beverage full drinks menu — hot coffee, iced lattes, matcha, mojitos, fresh juices and boba milk tea",
   },
   {
     src: "/menus/ice-cream.jpg",
     title: "Ice Cream",
     subtitle: "6 flavors, toppings & ice cream cart",
+    alt: "Dr Beverage ice cream menu — chocolate, vanilla, caramel, strawberry, mango and coconut with toppings",
   },
   {
     src: "/menus/taiyaki.jpg",
     title: "Taiyaki & Soft Serve",
     subtitle: "Japanese taiyaki & soft serve flavors",
+    alt: "Dr Beverage taiyaki menu — Japanese fish-shaped waffle with soft serve in black sesame and biscuit editions",
   },
   {
     src: "/menus/frozen-drinks.jpg",
     title: "Frozen Drinks",
     subtitle: "Slush flavors & slush machine",
+    alt: "Dr Beverage frozen drinks menu — green apple, strawberry, mango, blueberry and watermelon slush flavors",
   },
   {
     src: "/menus/canzzzz.jpg",
     title: "Canzzzz",
     subtitle: "Ready-to-go canned drinks",
+    alt: "Dr Beverage canned drinks menu — iced coffee, mojito, juice and signature blend cans ready to go",
   },
 ];
 
@@ -41,7 +46,7 @@ const MenuCard = ({ menu, index, onSelect, mobile }: {
     <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
       <img
         src={menu.src}
-        alt={`${menu.title} menu`}
+        alt={menu.alt || `${menu.title} menu`}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
       />
@@ -173,7 +178,7 @@ const Menus = () => {
 
           <img
             src={menus[selectedMenu].src}
-            alt={menus[selectedMenu].title}
+            alt={menus[selectedMenu].alt || menus[selectedMenu].title}
             className="max-w-[95vw] max-h-[85vh] object-contain select-none"
             draggable={false}
           />
